@@ -764,6 +764,58 @@ TRANSLATIONS: Dict[str, Dict[str, str]] = {
         "it": "Nessuna voce disponibile.",
         "sl": "Ni vnosov.",
     },
+
+    # ===================
+    # Error Pages
+    # ===================
+    "error_rate_limit_title": {
+        "de": "Bitte etwas Geduld",
+        "en": "Please be patient",
+        "it": "Un po' di pazienza",
+        "sl": "Prosimo za potrpljenje",
+    },
+    "error_rate_limit_message": {
+        "de": "Sie haben zu viele Anfragen in kurzer Zeit gesendet. Bitte warten Sie einen Moment und versuchen Sie es dann erneut.",
+        "en": "You've sent too many requests in a short time. Please wait a moment and try again.",
+        "it": "Hai inviato troppe richieste in poco tempo. Attendi un momento e riprova.",
+        "sl": "Poslali ste preveč zahtev v kratkem času. Počakajte trenutek in poskusite znova.",
+    },
+    "error_rate_limit_hint": {
+        "de": "Versuchen Sie es in etwa einer Minute erneut.",
+        "en": "Try again in about a minute.",
+        "it": "Riprova tra circa un minuto.",
+        "sl": "Poskusite znova čez približno minuto.",
+    },
+    "error_back_home": {
+        "de": "Zurück zur Startseite",
+        "en": "Back to home",
+        "it": "Torna alla home",
+        "sl": "Nazaj na domačo stran",
+    },
+    "error_not_found_title": {
+        "de": "Seite nicht gefunden",
+        "en": "Page not found",
+        "it": "Pagina non trovata",
+        "sl": "Stran ni najdena",
+    },
+    "error_not_found_message": {
+        "de": "Die angeforderte Seite existiert nicht oder wurde verschoben.",
+        "en": "The requested page does not exist or has been moved.",
+        "it": "La pagina richiesta non esiste o è stata spostata.",
+        "sl": "Zahtevana stran ne obstaja ali je bila premaknjena.",
+    },
+    "error_generic_title": {
+        "de": "Ein Fehler ist aufgetreten",
+        "en": "An error occurred",
+        "it": "Si è verificato un errore",
+        "sl": "Prišlo je do napake",
+    },
+    "error_generic_message": {
+        "de": "Etwas ist schiefgelaufen. Bitte versuchen Sie es später erneut.",
+        "en": "Something went wrong. Please try again later.",
+        "it": "Qualcosa è andato storto. Riprova più tardi.",
+        "sl": "Nekaj je šlo narobe. Poskusite znova pozneje.",
+    },
 }
 
 
