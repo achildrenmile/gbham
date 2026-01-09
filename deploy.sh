@@ -29,6 +29,10 @@ if [ ! -f .env ]; then
     echo ""
 fi
 
+# Stop old containers and remove orphans
+echo "[*] Stopping old containers..."
+docker compose down --remove-orphans
+
 # Build and start containers
 echo "[*] Building and starting containers..."
 docker compose up -d --build
