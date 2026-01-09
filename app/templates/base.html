@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <title>{% block title %}{{ settings.NET_NAME }} - Gästebuch{% endblock %}</title>
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <h1>{{ settings.NET_NAME }}</h1>
+        <p class="subtitle">Gästebuch ({{ settings.NET_TYPE }})</p>
+    </header>
+
+    <nav>
+        <a href="/">Gästebuch</a>
+        <a href="/privacy">Datenschutz</a>
+        <a href="/imprint">Impressum</a>
+    </nav>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>
+            <a href="/imprint">Impressum</a> |
+            <a href="/privacy">Datenschutz</a>
+            {% if settings.OPERATOR_CALLSIGN %}
+            | Betreiber: {{ settings.OPERATOR_CALLSIGN }}
+            {% endif %}
+        </p>
+        <p class="version">
+            Powered by <a href="https://github.com/achildrenmile/gbham" target="_blank" rel="noopener noreferrer">gbHam</a>
+            v{{ settings.APP_VERSION }}
+        </p>
+    </footer>
+</body>
+</html>

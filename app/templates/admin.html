@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Admin - {{ settings.NET_NAME }}</title>
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="admin-page">
+    <header>
+        <h1>{{ settings.NET_NAME }} - Admin</h1>
+    </header>
+
+    <main>
+        <section class="admin-controls">
+            <h2>Steuerung</h2>
+
+            <div class="control-panel">
+                <div class="status-info">
+                    <p><strong>Einträge gesamt:</strong> {{ total_count }}</p>
+                    <p>
+                        <strong>Modus:</strong>
+                        {% if is_readonly %}
+                        <span class="status-readonly">Nur-Lesen</span>
+                        {% else %}
+                        <span class="status-active">Aktiv</span>
+                        {% endif %}
+                    </p>
+                </div>
+
+                <div class="actions">
+                    <form action="/admin/readonly/toggle?token={{ token }}" method="post" class="inline-form">
+                        <button type="submit" class="btn {% if is_readonly %}btn-success{% else %}btn-warning{% endif %}">
+                            {% if is_readonly %}
+                            Schreibmodus aktivieren
+                            {% else %}
+                            Nur-Lesen aktivieren
+                            {% endif %}
+                        </button>
+                    </form>
+
+                    <a href="/admin/export/csv?token={{ token }}" class="btn btn-secondary">
+                        CSV-Export
+                    </a>
+
+                    <a href="/" class="btn btn-secondary">
+                        Zum Gästebuch
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="admin-entries">
+            <h2>Einträge ({{ total_count }})</h2>
+
+            {% if entries %}
+            <table class="entries-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Rufzeichen</th>
+                        <th>Nachricht</th>
+                        <th>Datum</th>
+                        <th>Aktion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in entries %}
+                    <tr>
+                        <td>{{ entry.id }}</td>
+                        <td class="callsign">{{ entry.callsign }}</td>
+                        <td class="message-cell">{{ entry.message }}</td>
+                        <td>{{ entry.created_at.strftime('%d.%m.%Y %H:%M') }}</td>
+                        <td>
+                            <form action="/admin/delete/{{ entry.id }}?token={{ token }}" method="post" class="inline-form"
+                                  onsubmit="return confirm('Eintrag von {{ entry.callsign }} wirklich löschen?');">
+                                <button type="submit" class="btn btn-danger btn-small">Löschen</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p class="no-entries">Keine Einträge vorhanden.</p>
+            {% endif %}
+        </section>
+    </main>
+
+    <footer>
+        <p class="version">
+            <a href="https://github.com/achildrenmile/gbham" target="_blank" rel="noopener noreferrer">gbHam</a>
+            v{{ settings.APP_VERSION }} - Admin
+        </p>
+    </footer>
+</body>
+</html>

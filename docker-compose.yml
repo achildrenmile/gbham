@@ -1,0 +1,63 @@
+# gbHam Docker Compose Configuration
+# Self-hosted guestbook for amateur radio nets
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gbham-app
+    restart: unless-stopped
+    environment:
+      # Required: Set a secure admin token
+      - ADMIN_TOKEN=${ADMIN_TOKEN:-CHANGE_ME_GENERATE_SECURE_TOKEN}
+
+      # Optional: Operator information (for privacy notice and imprint)
+      - OPERATOR_NAME=${OPERATOR_NAME:-Funkrundenbetreiber}
+      - OPERATOR_EMAIL=${OPERATOR_EMAIL:-kontakt@example.com}
+      - OPERATOR_CALLSIGN=${OPERATOR_CALLSIGN:-}
+      - OPERATOR_ADDRESS=${OPERATOR_ADDRESS:-}
+      - OPERATOR_COUNTRY=${OPERATOR_COUNTRY:-Österreich}
+
+      # Cloudflare (set to "true" if using Cloudflare CDN/Proxy)
+      - USE_CLOUDFLARE=${USE_CLOUDFLARE:-false}
+
+      # Optional: Net configuration
+      - NET_NAME=${NET_NAME:-Amateurfunk-Runde}
+      - NET_TYPE=${NET_TYPE:-FM}
+
+      # Optional: Rate limiting (seconds)
+      - ENTRY_COOLDOWN=${ENTRY_COOLDOWN:-60}
+      - RATE_LIMIT_REQUESTS=${RATE_LIMIT_REQUESTS:-5}
+      - RATE_LIMIT_WINDOW=${RATE_LIMIT_WINDOW:-60}
+
+      # Database (internal path)
+      - DATABASE_URL=sqlite:///./data/gbham.db
+    volumes:
+      - gbham_data:/app/data
+    networks:
+      - gbham-network
+    # Don't expose directly - use nginx
+    expose:
+      - "8000"
+
+  nginx:
+    image: nginx:1.25-alpine
+    container_name: gbham-nginx
+    restart: unless-stopped
+    ports:
+      - "${HTTP_PORT:-3005}:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - app
+    networks:
+      - gbham-network
+
+volumes:
+  gbham_data:
+    name: gbham_data
+
+networks:
+  gbham-network:
+    name: gbham-network

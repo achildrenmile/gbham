@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="form-section">
+    <h2>Neuer Eintrag</h2>
+
+    {% if success_message %}
+    <div class="message success" role="alert">
+        {{ success_message }}
+    </div>
+    {% endif %}
+
+    {% if error_message %}
+    <div class="message error" role="alert">
+        {{ error_message }}
+    </div>
+    {% endif %}
+
+    {% if is_readonly %}
+    <div class="message info" role="status">
+        Das Gästebuch befindet sich derzeit im Nur-Lesen-Modus.
+    </div>
+    {% else %}
+    <form action="/api/entries" method="post" class="entry-form">
+        <div class="form-group">
+            <label for="callsign">Rufzeichen *</label>
+            <input
+                type="text"
+                id="callsign"
+                name="callsign"
+                required
+                maxlength="{{ settings.MAX_CALLSIGN_LENGTH }}"
+                pattern="[A-Za-z]{1,2}[0-9][A-Za-z]{1,4}(\/[A-Za-z0-9]{1,4})?"
+                placeholder="z.B. OE8XBB, OE8JOTA"
+                autocomplete="off"
+                spellcheck="false"
+            >
+            <small>Europäisches Amateurfunk-Rufzeichen</small>
+        </div>
+
+        <div class="form-group">
+            <label for="message">Nachricht *</label>
+            <textarea
+                id="message"
+                name="message"
+                required
+                maxlength="{{ settings.MAX_MESSAGE_LENGTH }}"
+                rows="3"
+                placeholder="Ihre Grußbotschaft..."
+            ></textarea>
+            <small>Maximal {{ settings.MAX_MESSAGE_LENGTH }} Zeichen</small>
+        </div>
+
+        <!-- Honeypot field - hidden from users -->
+        <div class="hp-field" aria-hidden="true">
+            <label for="website">Website</label>
+            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+        </div>
+
+        <button type="submit" class="btn-submit">Eintrag absenden</button>
+    </form>
+
+    <p class="privacy-hint">
+        Mit dem Absenden bestätigen Sie, dass Sie die
+        <a href="/privacy">Datenschutzerklärung</a> gelesen haben.
+    </p>
+    {% endif %}
+</section>
+
+<section class="entries-section">
+    <h2>Einträge</h2>
+
+    {% if entries %}
+    <ul class="entries-list">
+        {% for entry in entries %}
+        <li class="entry">
+            <div class="entry-header">
+                <strong class="callsign">{{ entry.callsign }}</strong>
+                <time datetime="{{ entry.created_at.isoformat() }}">
+                    {{ entry.created_at.strftime('%d.%m.%Y %H:%M') }} UTC
+                </time>
+            </div>
+            <p class="entry-message">{{ entry.message }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="no-entries">Noch keine Einträge vorhanden. Seien Sie der Erste!</p>
+    {% endif %}
+</section>
+{% endblock %}
