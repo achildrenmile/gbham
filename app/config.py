@@ -31,6 +31,9 @@ class Settings:
     MAX_MESSAGE_LENGTH: int = 300
     MAX_CALLSIGN_LENGTH: int = 15
 
+    # Pagination
+    ENTRIES_PER_PAGE: int = int(os.getenv("ENTRIES_PER_PAGE", "15"))
+
     # Read-only mode
     READ_ONLY_MODE: bool = os.getenv("READ_ONLY_MODE", "false").lower() == "true"
 

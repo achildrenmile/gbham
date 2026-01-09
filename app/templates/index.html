@@ -68,7 +68,7 @@
 </section>
 
 <section class="entries-section">
-    <h2>Einträge</h2>
+    <h2>Einträge{% if pagination.total_entries > 0 %} <span class="entries-count">({{ pagination.total_entries }})</span>{% endif %}</h2>
 
     {% if entries %}
     <ul class="entries-list">
@@ -84,6 +84,48 @@
         </li>
         {% endfor %}
     </ul>
+
+    {% if pagination.total_pages > 1 %}
+    <nav class="pagination" aria-label="Seitennavigation">
+        <div class="pagination-info">
+            Seite {{ pagination.page }} von {{ pagination.total_pages }}
+        </div>
+        <div class="pagination-controls">
+            {% if pagination.has_prev %}
+            <a href="/?page=1" class="pagination-btn pagination-first" aria-label="Erste Seite" title="Erste Seite">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+            <a href="/?page={{ pagination.prev_page }}" class="pagination-btn pagination-prev" aria-label="Vorherige Seite">
+                <span aria-hidden="true">&lsaquo;</span> Zurück
+            </a>
+            {% else %}
+            <span class="pagination-btn pagination-first disabled" aria-disabled="true">
+                <span aria-hidden="true">&laquo;</span>
+            </span>
+            <span class="pagination-btn pagination-prev disabled" aria-disabled="true">
+                <span aria-hidden="true">&lsaquo;</span> Zurück
+            </span>
+            {% endif %}
+
+            {% if pagination.has_next %}
+            <a href="/?page={{ pagination.next_page }}" class="pagination-btn pagination-next" aria-label="Nächste Seite">
+                Weiter <span aria-hidden="true">&rsaquo;</span>
+            </a>
+            <a href="/?page={{ pagination.total_pages }}" class="pagination-btn pagination-last" aria-label="Letzte Seite" title="Letzte Seite">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+            {% else %}
+            <span class="pagination-btn pagination-next disabled" aria-disabled="true">
+                Weiter <span aria-hidden="true">&rsaquo;</span>
+            </span>
+            <span class="pagination-btn pagination-last disabled" aria-disabled="true">
+                <span aria-hidden="true">&raquo;</span>
+            </span>
+            {% endif %}
+        </div>
+    </nav>
+    {% endif %}
+
     {% else %}
     <p class="no-entries">Noch keine Einträge vorhanden. Seien Sie der Erste!</p>
     {% endif %}

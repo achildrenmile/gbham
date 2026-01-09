@@ -31,16 +31,31 @@ def get_readonly_status(db: Session) -> bool:
 @router.get("/", response_class=HTMLResponse)
 async def index(
     request: Request,
+    page: int = Query(1, ge=1),
     success: Optional[str] = Query(None),
     error: Optional[str] = Query(None),
     remaining: Optional[int] = Query(None),
     db: Session = Depends(get_db),
 ):
-    """Main guestbook page."""
+    """Main guestbook page with pagination."""
+    per_page = settings.ENTRIES_PER_PAGE
+
+    # Get total count for pagination
+    total_entries = db.query(GuestbookEntry).count()
+    total_pages = max(1, (total_entries + per_page - 1) // per_page)
+
+    # Ensure page is within valid range
+    page = min(page, total_pages)
+
+    # Calculate offset
+    offset = (page - 1) * per_page
+
+    # Get paginated entries
     entries = (
         db.query(GuestbookEntry)
         .order_by(GuestbookEntry.created_at.desc())
-        .limit(100)
+        .offset(offset)
+        .limit(per_page)
         .all()
     )
 
@@ -57,6 +72,18 @@ async def index(
     error_message = error_messages.get(error) if error else None
     success_message = "Vielen Dank für Ihren Eintrag!" if success else None
 
+    # Pagination info
+    pagination = {
+        "page": page,
+        "per_page": per_page,
+        "total_entries": total_entries,
+        "total_pages": total_pages,
+        "has_prev": page > 1,
+        "has_next": page < total_pages,
+        "prev_page": page - 1 if page > 1 else None,
+        "next_page": page + 1 if page < total_pages else None,
+    }
+
     return templates.TemplateResponse(
         "index.html",
         {
@@ -66,6 +93,7 @@ async def index(
             "error_message": error_message,
             "success_message": success_message,
             "settings": settings,
+            "pagination": pagination,
         },
     )
 

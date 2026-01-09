@@ -22,6 +22,9 @@ services:
       # Cloudflare (set to "true" if using Cloudflare CDN/Proxy)
       - USE_CLOUDFLARE=${USE_CLOUDFLARE:-false}
 
+      # Pagination
+      - ENTRIES_PER_PAGE=${ENTRIES_PER_PAGE:-15}
+
       # Optional: Net configuration
       - NET_NAME=${NET_NAME:-Amateurfunk-Runde}
       - NET_TYPE=${NET_TYPE:-FM}
