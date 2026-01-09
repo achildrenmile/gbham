@@ -21,9 +21,10 @@
             <a href="/privacy?lang={{ lang }}">{{ t('nav_privacy') }}</a>
             <a href="/imprint?lang={{ lang }}">{{ t('nav_imprint') }}</a>
         </div>
+        <!-- DEBUG: lang={{ lang }}, t.lang={{ t.lang }} -->
         <div class="lang-switcher">
             {% for l in languages %}
-            <a href="?lang={{ l }}" class="lang-btn {% if l == lang %}active{% endif %}" title="{{ l|upper }}">
+            <a href="?lang={{ l }}" class="lang-btn{% if l == t.lang %} active{% endif %}"{% if l == t.lang %} style="font-weight:bold; background:#0066cc; color:white;"{% endif %} title="{{ l|upper }}">
                 {{ l|upper }}
             </a>
             {% endfor %}
