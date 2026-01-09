@@ -25,6 +25,9 @@ services:
       # Pagination
       - ENTRIES_PER_PAGE=${ENTRIES_PER_PAGE:-15}
 
+      # Language (de, en, it, sl)
+      - DEFAULT_LANGUAGE=${DEFAULT_LANGUAGE:-de}
+
       # Optional: Net configuration
       - NET_NAME=${NET_NAME:-Amateurfunk-Runde}
       - NET_TYPE=${NET_TYPE:-FM}

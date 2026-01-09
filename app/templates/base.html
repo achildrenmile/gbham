@@ -1,24 +1,33 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="{{ lang }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <title>{% block title %}{{ settings.NET_NAME }} - Gästebuch{% endblock %}</title>
+    <title>{% block title %}{{ settings.NET_NAME }} - {{ t('subtitle_guestbook') }}{% endblock %}</title>
     <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
     <header>
         <h1>{{ settings.NET_NAME }}</h1>
-        <p class="subtitle">Gästebuch ({{ settings.NET_TYPE }})</p>
+        <p class="subtitle">{{ t('subtitle_guestbook') }} ({{ settings.NET_TYPE }})</p>
     </header>
 
     <nav>
-        <a href="/">Gästebuch</a>
-        <a href="/privacy">Datenschutz</a>
-        <a href="/imprint">Impressum</a>
+        <div class="nav-links">
+            <a href="/?lang={{ lang }}">{{ t('nav_guestbook') }}</a>
+            <a href="/privacy?lang={{ lang }}">{{ t('nav_privacy') }}</a>
+            <a href="/imprint?lang={{ lang }}">{{ t('nav_imprint') }}</a>
+        </div>
+        <div class="lang-switcher">
+            {% for l in languages %}
+            <a href="?lang={{ l }}" class="lang-btn {% if l == lang %}active{% endif %}" title="{{ l|upper }}">
+                {{ l|upper }}
+            </a>
+            {% endfor %}
+        </div>
     </nav>
 
     <main>
@@ -27,14 +36,14 @@
 
     <footer>
         <p>
-            <a href="/imprint">Impressum</a> |
-            <a href="/privacy">Datenschutz</a>
+            <a href="/imprint?lang={{ lang }}">{{ t('nav_imprint') }}</a> |
+            <a href="/privacy?lang={{ lang }}">{{ t('nav_privacy') }}</a>
             {% if settings.OPERATOR_CALLSIGN %}
-            | Betreiber: {{ settings.OPERATOR_CALLSIGN }}
+            | {{ t('operator') }}: {{ settings.OPERATOR_CALLSIGN }}
             {% endif %}
         </p>
         <p class="version">
-            Powered by <a href="https://github.com/achildrenmile/gbham" target="_blank" rel="noopener noreferrer">gbHam</a>
+            {{ t('powered_by') }} <a href="https://github.com/achildrenmile/gbham" target="_blank" rel="noopener noreferrer">gbHam</a>
             v{{ settings.APP_VERSION }}
         </p>
     </footer>

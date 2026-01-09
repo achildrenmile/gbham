@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>{{ title }} - gbHam</title>
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        .error-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+            text-align: center;
+            padding: 2rem;
+        }
+        .error-code {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #0066cc;
+            margin-bottom: 0.5rem;
+        }
+        .error-title {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+        .error-message {
+            color: #666;
+            max-width: 400px;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        .error-action {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: #0066cc;
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .error-action:hover {
+            background: #0052a3;
+            text-decoration: none;
+        }
+        .retry-hint {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>gbHam</h1>
+    </header>
+
+    <main class="error-page">
+        <div class="error-code">{{ code }}</div>
+        <h2 class="error-title">{{ title }}</h2>
+        <p class="error-message">{{ message }}</p>
+        <a href="/" class="error-action">{{ action }}</a>
+        {% if retry_seconds %}
+        <p class="retry-hint">{{ retry_hint }}</p>
+        {% endif %}
+    </main>
+
+    <footer>
+        <p class="version">
+            <a href="https://github.com/achildrenmile/gbham" target="_blank" rel="noopener noreferrer">gbHam</a>
+        </p>
+    </footer>
+</body>
+</html>

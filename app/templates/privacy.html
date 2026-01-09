@@ -1,20 +1,18 @@
 {% extends "base.html" %}
 
-{% block title %}Datenschutzerklärung - {{ settings.NET_NAME }}{% endblock %}
+{% block title %}{{ t('privacy_title') }} - {{ settings.NET_NAME }}{% endblock %}
 
 {% block content %}
 <section class="privacy-section">
-    <h2>Datenschutzerklärung</h2>
+    <h2>{{ t('privacy_title') }}</h2>
 
     <article class="privacy-content">
-        <h3>1. Verantwortlicher</h3>
-        <p>
-            Verantwortlich für die Datenverarbeitung auf dieser Website ist:
-        </p>
+        <h3>1. {{ t('privacy_responsible') }}</h3>
+        <p>{{ t('privacy_responsible_text') }}</p>
         <address>
             {{ settings.OPERATOR_NAME }}<br>
             {% if settings.OPERATOR_CALLSIGN %}
-            Rufzeichen: {{ settings.OPERATOR_CALLSIGN }}<br>
+            {{ t('callsign') }}: {{ settings.OPERATOR_CALLSIGN }}<br>
             {% endif %}
             {% if settings.OPERATOR_ADDRESS %}
             {{ settings.OPERATOR_ADDRESS }}<br>
@@ -23,145 +21,106 @@
             E-Mail: <a href="mailto:{{ settings.OPERATOR_EMAIL }}">{{ settings.OPERATOR_EMAIL }}</a>
         </address>
 
-        <h3>2. Zweck der Datenverarbeitung</h3>
+        <h3>2. {{ t('privacy_purpose') }}</h3>
         <p>
-            Diese Website dient als freiwilliges Gästebuch für die Amateurfunk-Runde
-            <strong>{{ settings.NET_NAME }}</strong>. Sie ermöglicht es Teilnehmern der
-            Funkrunde, Grüße zu hinterlassen und sich zu vernetzen.
+            {{ t('privacy_purpose_text') }}
+            <strong>{{ settings.NET_NAME }}</strong>.
         </p>
         <p>
-            <strong>Wichtiger Hinweis:</strong> Dies ist <em>kein</em> Logbuch, <em>kein</em>
-            soziales Netzwerk und <em>kein</em> Tracking-Tool. Es handelt sich um ein
-            datensparsames, freiwilliges Gästebuch.
+            <strong>{{ t('privacy_purpose_note') }}</strong>
         </p>
 
-        <h3>3. Rechtsgrundlage</h3>
-        <p>
-            Die Verarbeitung Ihrer Daten erfolgt auf Grundlage Ihrer <strong>freiwilligen
-            Einwilligung</strong> gemäß Art. 6 Abs. 1 lit. a DSGVO. Mit dem Absenden eines
-            Eintrags willigen Sie in die Verarbeitung der von Ihnen eingegebenen Daten ein.
-        </p>
+        <h3>3. {{ t('privacy_legal_basis') }}</h3>
+        <p>{{ t('privacy_legal_basis_text') }}</p>
 
-        <h3>4. Erhobene Daten</h3>
-        <p>Bei Nutzung des Gästebuchs werden folgende Daten gespeichert:</p>
+        <h3>4. {{ t('privacy_collected_data') }}</h3>
+        <p>{{ t('privacy_collected_data_text') }}</p>
         <ul>
-            <li><strong>Rufzeichen:</strong> Ihr eingegebenes Amateurfunk-Rufzeichen</li>
-            <li><strong>Nachricht:</strong> Ihre eingegebene Grußbotschaft (max. 300 Zeichen)</li>
-            <li><strong>Zeitstempel:</strong> Datum und Uhrzeit des Eintrags</li>
+            <li><strong>{{ t('callsign') }}:</strong> {{ t('privacy_data_callsign') }}</li>
+            <li><strong>{{ t('message') }}:</strong> {{ t('privacy_data_message') }}</li>
+            <li><strong>Timestamp:</strong> {{ t('privacy_data_timestamp') }}</li>
         </ul>
 
-        <h3>5. Nicht erhobene Daten</h3>
-        <p>Folgende Daten werden <strong>ausdrücklich nicht</strong> gespeichert:</p>
+        <h3>5. {{ t('privacy_not_collected') }}</h3>
+        <p>{{ t('privacy_not_collected_text') }}</p>
         <ul>
-            <li>IP-Adressen (werden nur temporär für Spam-Schutz verwendet und nicht protokolliert)</li>
-            <li>Cookies (außer technisch notwendige Session-Cookies)</li>
-            <li>Tracking- oder Analysedaten</li>
-            <li>Standortdaten</li>
-            <li>Geräteinformationen</li>
+            <li>{{ t('privacy_no_ip') }}</li>
+            <li>{{ t('privacy_no_cookies') }}</li>
+            <li>{{ t('privacy_no_tracking') }}</li>
+            <li>{{ t('privacy_no_location') }}</li>
+            <li>{{ t('privacy_no_device') }}</li>
         </ul>
 
-        <h3>6. Speicherdauer</h3>
-        <p>
-            Ihre Einträge werden auf unbestimmte Zeit gespeichert, solange das Gästebuch
-            betrieben wird. Sie können jederzeit die Löschung Ihrer Einträge beantragen.
-        </p>
+        <h3>6. {{ t('privacy_retention') }}</h3>
+        <p>{{ t('privacy_retention_text') }}</p>
 
-        <h3>7. Ihre Rechte</h3>
-        <p>Sie haben folgende Rechte bezüglich Ihrer personenbezogenen Daten:</p>
+        <h3>7. {{ t('privacy_rights') }}</h3>
+        <p>{{ t('privacy_rights_text') }}</p>
         <ul>
-            <li><strong>Auskunftsrecht (Art. 15 DSGVO):</strong> Sie können Auskunft über Ihre gespeicherten Daten verlangen.</li>
-            <li><strong>Recht auf Löschung (Art. 17 DSGVO):</strong> Sie können die Löschung Ihrer Einträge verlangen.</li>
-            <li><strong>Widerrufsrecht (Art. 7 Abs. 3 DSGVO):</strong> Sie können Ihre Einwilligung jederzeit widerrufen.</li>
-            <li><strong>Beschwerderecht:</strong> Sie haben das Recht, sich bei einer Aufsichtsbehörde zu beschweren.</li>
+            <li>{{ t('privacy_right_access') }}</li>
+            <li>{{ t('privacy_right_deletion') }}</li>
+            <li>{{ t('privacy_right_withdraw') }}</li>
+            <li>{{ t('privacy_right_complaint') }}</li>
         </ul>
 
-        <h3>8. Kontakt für Datenschutzanfragen</h3>
-        <p>
-            Für alle Anfragen bezüglich Ihrer Daten (Auskunft, Löschung, Widerruf) wenden
-            Sie sich bitte an:
-        </p>
-        <p>
-            <a href="mailto:{{ settings.OPERATOR_EMAIL }}">{{ settings.OPERATOR_EMAIL }}</a>
-        </p>
-        <p>
-            Bitte geben Sie in Ihrer Anfrage Ihr Rufzeichen an, damit wir Ihre Einträge
-            identifizieren können.
-        </p>
+        <h3>8. {{ t('privacy_contact') }}</h3>
+        <p>{{ t('privacy_contact_text') }}</p>
+        <p><a href="mailto:{{ settings.OPERATOR_EMAIL }}">{{ settings.OPERATOR_EMAIL }}</a></p>
+        <p>{{ t('privacy_contact_hint') }}</p>
 
-        <h3>9. Technische Sicherheitsmaßnahmen</h3>
-        <p>
-            Wir setzen technische Maßnahmen zum Schutz Ihrer Daten und zur Missbrauchsprävention ein:
-        </p>
+        <h3>9. {{ t('privacy_security') }}</h3>
+        <p>{{ t('privacy_security_text') }}</p>
         <ul>
-            <li>Eingabevalidierung und -bereinigung</li>
-            <li>Schutz vor automatisierten Anfragen (Rate Limiting)</li>
-            <li>Verschlüsselte Übertragung (HTTPS, sofern konfiguriert)</li>
+            <li>{{ t('privacy_security_validation') }}</li>
+            <li>{{ t('privacy_security_ratelimit') }}</li>
+            <li>{{ t('privacy_security_https') }}</li>
             {% if not settings.USE_CLOUDFLARE %}
-            <li>Keine Weitergabe von Daten an Dritte</li>
+            <li>{{ t('privacy_security_nothirdparty') }}</li>
             {% endif %}
         </ul>
 
         {% if settings.USE_CLOUDFLARE %}
-        <h3>10. Cloudflare (CDN & Sicherheit)</h3>
-        <p>
-            Diese Website nutzt Dienste von <strong>Cloudflare, Inc.</strong>, einem US-amerikanischen
-            Unternehmen, das Content Delivery Network (CDN), DDoS-Schutz und Sicherheitsdienste anbietet.
-        </p>
+        <h3>10. {{ t('privacy_cloudflare') }}</h3>
+        <p>{{ t('privacy_cloudflare_text') }}</p>
 
-        <h4>Verarbeitete Daten</h4>
-        <p>Bei Nutzung dieser Website werden durch Cloudflare folgende Daten verarbeitet:</p>
+        <h4>{{ t('privacy_cloudflare_data') }}</h4>
         <ul>
-            <li><strong>IP-Adressen:</strong> Für Routing und Sicherheitsfunktionen</li>
-            <li><strong>HTTP-Anfragedaten:</strong> Header, URLs und Metadaten</li>
-            <li><strong>Sicherheitsinformationen:</strong> Zur Erkennung und Abwehr von Angriffen</li>
+            <li>{{ t('privacy_cloudflare_ip') }}</li>
+            <li>{{ t('privacy_cloudflare_http') }}</li>
+            <li>{{ t('privacy_cloudflare_security') }}</li>
         </ul>
 
-        <h4>Funktionen</h4>
-        <p>Cloudflare übernimmt folgende Aufgaben:</p>
+        <h4>{{ t('privacy_cloudflare_functions') }}</h4>
         <ul>
-            <li><strong>CDN:</strong> Zwischenspeichern und Auslieferung statischer Inhalte von nahegelegenen Servern</li>
-            <li><strong>DDoS-Schutz:</strong> Schutz vor Distributed-Denial-of-Service-Angriffen</li>
-            <li><strong>SSL/TLS:</strong> Verschlüsselung der Datenübertragung</li>
-            <li><strong>Sicherheit:</strong> Blockade bösartigen Datenverkehrs und Bot-Angriffe</li>
+            <li>{{ t('privacy_cloudflare_cdn') }}</li>
+            <li>{{ t('privacy_cloudflare_ddos') }}</li>
+            <li>{{ t('privacy_cloudflare_ssl') }}</li>
+            <li>{{ t('privacy_cloudflare_block') }}</li>
         </ul>
 
-        <h4>Rechtsgrundlage & Datenschutz</h4>
+        <h4>{{ t('privacy_cloudflare_legal') }}</h4>
+        <p>{{ t('privacy_cloudflare_legal_text') }}</p>
+        <p>{{ t('privacy_cloudflare_dpf') }}</p>
         <p>
-            Die Nutzung von Cloudflare erfolgt auf Grundlage unseres berechtigten Interesses an einer
-            sicheren und effizienten Bereitstellung dieser Website (Art. 6 Abs. 1 lit. f DSGVO).
-        </p>
-        <p>
-            Cloudflare ist nach dem <strong>EU-U.S. Data Privacy Framework</strong> zertifiziert, das einen
-            angemessenen Schutz für Datenübermittlungen in die USA gewährleistet.
-        </p>
-        <p>
-            Weitere Informationen finden Sie in der
-            <a href="https://www.cloudflare.com/de-de/privacypolicy/" target="_blank" rel="noopener noreferrer">
-                Datenschutzrichtlinie von Cloudflare</a>.
+            {{ t('privacy_cloudflare_more') }}
+            <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer">Cloudflare Privacy Policy</a>
         </p>
 
-        <h3>11. Freiwilligkeit</h3>
+        <h3>11. {{ t('privacy_voluntary') }}</h3>
         {% else %}
-        <h3>10. Freiwilligkeit</h3>
+        <h3>10. {{ t('privacy_voluntary') }}</h3>
         {% endif %}
-        <p>
-            Die Nutzung dieses Gästebuchs ist vollständig freiwillig. Sie können die
-            Funkrunde nutzen, ohne einen Gästebucheintrag zu hinterlassen. Ihre Teilnahme
-            an der Funkrunde ist nicht an die Nutzung dieses Gästebuchs gekoppelt.
-        </p>
+        <p>{{ t('privacy_voluntary_text') }}</p>
 
         {% if settings.USE_CLOUDFLARE %}
-        <h3>12. Änderungen dieser Datenschutzerklärung</h3>
+        <h3>12. {{ t('privacy_changes') }}</h3>
         {% else %}
-        <h3>11. Änderungen dieser Datenschutzerklärung</h3>
+        <h3>11. {{ t('privacy_changes') }}</h3>
         {% endif %}
-        <p>
-            Wir behalten uns vor, diese Datenschutzerklärung bei Bedarf anzupassen. Die
-            aktuelle Version ist stets auf dieser Seite abrufbar.
-        </p>
+        <p>{{ t('privacy_changes_text') }}</p>
 
         <p class="privacy-date">
-            <em>Stand: Januar 2026</em>
+            <em>{{ t('privacy_date') }}</em>
         </p>
     </article>
 </section>

@@ -65,6 +65,7 @@ docker compose logs app | grep "Admin URL"
 | `NET_TYPE` | Typ der Runde (FM, DMR, etc.) | FM |
 | `USE_CLOUDFLARE` | Cloudflare CDN aktiv (zeigt Hinweis in Datenschutz) | false |
 | `ENTRIES_PER_PAGE` | Einträge pro Seite (Paging) | 15 |
+| `DEFAULT_LANGUAGE` | Standard-Sprache (de, en, it, sl) | de |
 | `ENTRY_COOLDOWN` | Sekunden zwischen Einträgen/IP | 60 |
 | `RATE_LIMIT_REQUESTS` | Max. Anfragen pro Zeitfenster | 5 |
 | `RATE_LIMIT_WINDOW` | Zeitfenster in Sekunden | 60 |

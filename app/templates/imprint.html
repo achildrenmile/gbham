@@ -1,19 +1,19 @@
 {% extends "base.html" %}
 
-{% block title %}Impressum - {{ settings.NET_NAME }}{% endblock %}
+{% block title %}{{ t('imprint_title') }} - {{ settings.NET_NAME }}{% endblock %}
 
 {% block content %}
 <section class="imprint-section">
-    <h2>Impressum</h2>
+    <h2>{{ t('imprint_title') }}</h2>
 
     <article class="imprint-content">
-        <h3>Angaben gemäß E-Commerce-Gesetz (ECG) § 5 und Mediengesetz (MedienG) § 25</h3>
+        <h3>{{ t('imprint_legal') }}</h3>
 
-        <h4>Betreiber der Website</h4>
+        <h4>{{ t('imprint_operator') }}</h4>
         <address>
             {{ settings.OPERATOR_NAME }}<br>
             {% if settings.OPERATOR_CALLSIGN %}
-            Rufzeichen: {{ settings.OPERATOR_CALLSIGN }}<br>
+            {{ t('callsign') }}: {{ settings.OPERATOR_CALLSIGN }}<br>
             {% endif %}
             {% if settings.OPERATOR_ADDRESS %}
             {{ settings.OPERATOR_ADDRESS }}<br>
@@ -21,72 +21,41 @@
             {{ settings.OPERATOR_COUNTRY }}
         </address>
 
-        <h4>Kontakt</h4>
+        <h4>{{ t('imprint_contact') }}</h4>
         <p>
             E-Mail: <a href="mailto:{{ settings.OPERATOR_EMAIL }}">{{ settings.OPERATOR_EMAIL }}</a>
         </p>
 
-        <h3>Haftung für Inhalte</h3>
+        <h3>{{ t('imprint_liability_content') }}</h3>
+        <p>{{ t('imprint_liability_content_text') }}</p>
+
+        <h3>{{ t('imprint_liability_links') }}</h3>
+        <p>{{ t('imprint_liability_links_text') }}</p>
+        <p>{{ t('imprint_liability_links_note') }}</p>
+
+        <h3>{{ t('imprint_copyright') }}</h3>
+        <p>{{ t('imprint_copyright_text') }}</p>
+        <p>{{ t('imprint_copyright_private') }}</p>
+
+        <h3>{{ t('imprint_ugc') }}</h3>
+        <p>{{ t('imprint_ugc_text') }}</p>
         <p>
-            Die Inhalte dieser Website wurden mit größtmöglicher Sorgfalt erstellt. Für die
-            Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine
-            Gewähr übernehmen. Als Diensteanbieter sind wir für eigene Inhalte auf diesen
-            Seiten nach den allgemeinen Gesetzen verantwortlich.
+            {{ t('imprint_ugc_report') }}
+            <a href="mailto:{{ settings.OPERATOR_EMAIL }}">{{ settings.OPERATOR_EMAIL }}</a>
         </p>
 
-        <h3>Haftung für Links</h3>
+        <h3>{{ t('imprint_odr') }}</h3>
         <p>
-            Diese Website enthält möglicherweise Links zu externen Websites Dritter, auf deren
-            Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte
-            auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der
-            jeweilige Anbieter oder Betreiber der Seiten verantwortlich.
-        </p>
-        <p>
-            Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne
-            konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden
-            von Rechtsverletzungen werden wir derartige Links umgehend entfernen.
-        </p>
-
-        <h3>Urheberrecht</h3>
-        <p>
-            Die durch den Betreiber dieser Website erstellten Inhalte und Werke unterliegen
-            dem österreichischen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung
-            und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der
-            schriftlichen Zustimmung des jeweiligen Erstellers.
-        </p>
-        <p>
-            Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen
-            Gebrauch gestattet.
-        </p>
-
-        <h3>Nutzergenerierte Inhalte</h3>
-        <p>
-            Diese Website ermöglicht es Nutzern, Gästebucheinträge zu hinterlassen. Für diese
-            nutzergenerierten Inhalte sind die jeweiligen Verfasser selbst verantwortlich.
-            Wir behalten uns vor, rechtswidrige oder gegen unsere Nutzungsbedingungen
-            verstoßende Inhalte ohne Vorankündigung zu entfernen.
-        </p>
-        <p>
-            Sollten Sie auf rechtswidrige Inhalte aufmerksam werden, bitten wir um einen
-            entsprechenden Hinweis per E-Mail an
-            <a href="mailto:{{ settings.OPERATOR_EMAIL }}">{{ settings.OPERATOR_EMAIL }}</a>.
-        </p>
-
-        <h3>Online-Streitbeilegung</h3>
-        <p>
-            Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS)
-            bereit: <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener noreferrer">
+            {{ t('imprint_odr_text') }}
+            <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener noreferrer">
             https://ec.europa.eu/consumers/odr/</a>
         </p>
-        <p>
-            Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer
-            Verbraucherschlichtungsstelle teilzunehmen.
-        </p>
+        <p>{{ t('imprint_odr_note') }}</p>
 
-        <h3>Datenschutz</h3>
+        <h3>{{ t('nav_privacy') }}</h3>
         <p>
-            Informationen zur Verarbeitung Ihrer personenbezogenen Daten finden Sie in unserer
-            <a href="/privacy">Datenschutzerklärung</a>.
+            {{ t('imprint_privacy_link') }}
+            <a href="/privacy?lang={{ lang }}">{{ t('privacy_title') }}</a>.
         </p>
     </article>
 </section>

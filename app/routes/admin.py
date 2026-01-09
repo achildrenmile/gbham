@@ -18,6 +18,7 @@ from app.database import get_db
 from app.models import GuestbookEntry, ReadOnlyMode
 from app.security import verify_admin_token
 from app.config import get_settings
+from app.translations import Translator, SUPPORTED_LANGUAGES
 
 logger = logging.getLogger(__name__)
 settings = get_settings()
@@ -40,9 +41,13 @@ def verify_token(token: Optional[str] = Query(None)) -> str:
 async def admin_page(
     request: Request,
     token: str = Depends(verify_token),
+    lang: Optional[str] = Query(None),
     db: Session = Depends(get_db),
 ):
     """Admin overview page."""
+    current_lang = lang if lang in SUPPORTED_LANGUAGES else settings.DEFAULT_LANGUAGE
+    t = Translator(current_lang)
+
     entries = (
         db.query(GuestbookEntry)
         .order_by(GuestbookEntry.created_at.desc())
@@ -64,6 +69,9 @@ async def admin_page(
             "total_count": total_count,
             "token": token,
             "settings": settings,
+            "t": t,
+            "lang": current_lang,
+            "languages": SUPPORTED_LANGUAGES,
         },
     )
 

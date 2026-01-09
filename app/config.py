@@ -23,7 +23,7 @@ class Settings:
     ADMIN_TOKEN: str = os.getenv("ADMIN_TOKEN", secrets.token_urlsafe(32))
 
     # Rate Limiting (Backend layer)
-    RATE_LIMIT_REQUESTS: int = int(os.getenv("RATE_LIMIT_REQUESTS", "5"))
+    RATE_LIMIT_REQUESTS: int = int(os.getenv("RATE_LIMIT_REQUESTS", "30"))
     RATE_LIMIT_WINDOW: int = int(os.getenv("RATE_LIMIT_WINDOW", "60"))  # seconds
     ENTRY_COOLDOWN: int = int(os.getenv("ENTRY_COOLDOWN", "60"))  # seconds between entries per IP
 
@@ -33,6 +33,9 @@ class Settings:
 
     # Pagination
     ENTRIES_PER_PAGE: int = int(os.getenv("ENTRIES_PER_PAGE", "15"))
+
+    # Language (de, en, it, sl)
+    DEFAULT_LANGUAGE: str = os.getenv("DEFAULT_LANGUAGE", "de")
 
     # Read-only mode
     READ_ONLY_MODE: bool = os.getenv("READ_ONLY_MODE", "false").lower() == "true"

@@ -2,7 +2,7 @@
 
 {% block content %}
 <section class="form-section">
-    <h2>Neuer Eintrag</h2>
+    <h2>{{ t('new_entry') }}</h2>
 
     {% if success_message %}
     <div class="message success" role="alert">
@@ -18,12 +18,12 @@
 
     {% if is_readonly %}
     <div class="message info" role="status">
-        Das Gästebuch befindet sich derzeit im Nur-Lesen-Modus.
+        {{ t('readonly_notice') }}
     </div>
     {% else %}
     <form action="/api/entries" method="post" class="entry-form">
         <div class="form-group">
-            <label for="callsign">Rufzeichen *</label>
+            <label for="callsign">{{ t('callsign') }} *</label>
             <input
                 type="text"
                 id="callsign"
@@ -35,20 +35,20 @@
                 autocomplete="off"
                 spellcheck="false"
             >
-            <small>Europäisches Amateurfunk-Rufzeichen</small>
+            <small>{{ t('callsign_hint') }}</small>
         </div>
 
         <div class="form-group">
-            <label for="message">Nachricht *</label>
+            <label for="message">{{ t('message') }} *</label>
             <textarea
                 id="message"
                 name="message"
                 required
                 maxlength="{{ settings.MAX_MESSAGE_LENGTH }}"
                 rows="3"
-                placeholder="Ihre Grußbotschaft..."
+                placeholder="{{ t('message_placeholder') }}"
             ></textarea>
-            <small>Maximal {{ settings.MAX_MESSAGE_LENGTH }} Zeichen</small>
+            <small>{{ t('message_hint', settings.MAX_MESSAGE_LENGTH) }}</small>
         </div>
 
         <!-- Honeypot field - hidden from users -->
@@ -57,18 +57,17 @@
             <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
         </div>
 
-        <button type="submit" class="btn-submit">Eintrag absenden</button>
+        <button type="submit" class="btn-submit">{{ t('submit') }}</button>
     </form>
 
     <p class="privacy-hint">
-        Mit dem Absenden bestätigen Sie, dass Sie die
-        <a href="/privacy">Datenschutzerklärung</a> gelesen haben.
+        {{ t('privacy_hint', '<a href="/privacy?lang=' + lang + '">' + t('privacy_policy') + '</a>')|safe }}
     </p>
     {% endif %}
 </section>
 
 <section class="entries-section">
-    <h2>Einträge{% if pagination.total_entries > 0 %} <span class="entries-count">({{ pagination.total_entries }})</span>{% endif %}</h2>
+    <h2>{{ t('entries') }}{% if pagination.total_entries > 0 %} <span class="entries-count">({{ pagination.total_entries }})</span>{% endif %}</h2>
 
     {% if entries %}
     <ul class="entries-list">
@@ -88,35 +87,35 @@
     {% if pagination.total_pages > 1 %}
     <nav class="pagination" aria-label="Seitennavigation">
         <div class="pagination-info">
-            Seite {{ pagination.page }} von {{ pagination.total_pages }}
+            {{ t('page_of', pagination.page, pagination.total_pages) }}
         </div>
         <div class="pagination-controls">
             {% if pagination.has_prev %}
-            <a href="/?page=1" class="pagination-btn pagination-first" aria-label="Erste Seite" title="Erste Seite">
+            <a href="/?page=1&lang={{ lang }}" class="pagination-btn pagination-first" aria-label="{{ t('first_page') }}" title="{{ t('first_page') }}">
                 <span aria-hidden="true">&laquo;</span>
             </a>
-            <a href="/?page={{ pagination.prev_page }}" class="pagination-btn pagination-prev" aria-label="Vorherige Seite">
-                <span aria-hidden="true">&lsaquo;</span> Zurück
+            <a href="/?page={{ pagination.prev_page }}&lang={{ lang }}" class="pagination-btn pagination-prev" aria-label="{{ t('prev_page') }}">
+                <span aria-hidden="true">&lsaquo;</span> {{ t('prev_page') }}
             </a>
             {% else %}
             <span class="pagination-btn pagination-first disabled" aria-disabled="true">
                 <span aria-hidden="true">&laquo;</span>
             </span>
             <span class="pagination-btn pagination-prev disabled" aria-disabled="true">
-                <span aria-hidden="true">&lsaquo;</span> Zurück
+                <span aria-hidden="true">&lsaquo;</span> {{ t('prev_page') }}
             </span>
             {% endif %}
 
             {% if pagination.has_next %}
-            <a href="/?page={{ pagination.next_page }}" class="pagination-btn pagination-next" aria-label="Nächste Seite">
-                Weiter <span aria-hidden="true">&rsaquo;</span>
+            <a href="/?page={{ pagination.next_page }}&lang={{ lang }}" class="pagination-btn pagination-next" aria-label="{{ t('next_page') }}">
+                {{ t('next_page') }} <span aria-hidden="true">&rsaquo;</span>
             </a>
-            <a href="/?page={{ pagination.total_pages }}" class="pagination-btn pagination-last" aria-label="Letzte Seite" title="Letzte Seite">
+            <a href="/?page={{ pagination.total_pages }}&lang={{ lang }}" class="pagination-btn pagination-last" aria-label="{{ t('last_page') }}" title="{{ t('last_page') }}">
                 <span aria-hidden="true">&raquo;</span>
             </a>
             {% else %}
             <span class="pagination-btn pagination-next disabled" aria-disabled="true">
-                Weiter <span aria-hidden="true">&rsaquo;</span>
+                {{ t('next_page') }} <span aria-hidden="true">&rsaquo;</span>
             </span>
             <span class="pagination-btn pagination-last disabled" aria-disabled="true">
                 <span aria-hidden="true">&raquo;</span>
@@ -127,7 +126,7 @@
     {% endif %}
 
     {% else %}
-    <p class="no-entries">Noch keine Einträge vorhanden. Seien Sie der Erste!</p>
+    <p class="no-entries">{{ t('no_entries') }}</p>
     {% endif %}
 </section>
 {% endblock %}

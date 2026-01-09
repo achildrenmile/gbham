@@ -1,31 +1,44 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="{{ lang }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
-    <title>Admin - {{ settings.NET_NAME }}</title>
+    <title>{{ t('admin_title') }} - {{ settings.NET_NAME }}</title>
     <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body class="admin-page">
     <header>
-        <h1>{{ settings.NET_NAME }} - Admin</h1>
+        <h1>{{ settings.NET_NAME }} - {{ t('admin_title') }}</h1>
     </header>
+
+    <nav>
+        <div class="nav-links">
+            <a href="/?lang={{ lang }}">{{ t('nav_guestbook') }}</a>
+        </div>
+        <div class="lang-switcher">
+            {% for l in languages %}
+            <a href="?token={{ token }}&lang={{ l }}" class="lang-btn {% if l == lang %}active{% endif %}" title="{{ l|upper }}">
+                {{ l|upper }}
+            </a>
+            {% endfor %}
+        </div>
+    </nav>
 
     <main>
         <section class="admin-controls">
-            <h2>Steuerung</h2>
+            <h2>{{ t('admin_controls') }}</h2>
 
             <div class="control-panel">
                 <div class="status-info">
-                    <p><strong>Einträge gesamt:</strong> {{ total_count }}</p>
+                    <p><strong>{{ t('admin_total_entries') }}:</strong> {{ total_count }}</p>
                     <p>
-                        <strong>Modus:</strong>
+                        <strong>{{ t('admin_mode') }}:</strong>
                         {% if is_readonly %}
-                        <span class="status-readonly">Nur-Lesen</span>
+                        <span class="status-readonly">{{ t('admin_readonly') }}</span>
                         {% else %}
-                        <span class="status-active">Aktiv</span>
+                        <span class="status-active">{{ t('admin_active') }}</span>
                         {% endif %}
                     </p>
                 </div>
@@ -34,36 +47,36 @@
                     <form action="/admin/readonly/toggle?token={{ token }}" method="post" class="inline-form">
                         <button type="submit" class="btn {% if is_readonly %}btn-success{% else %}btn-warning{% endif %}">
                             {% if is_readonly %}
-                            Schreibmodus aktivieren
+                            {{ t('admin_enable_write') }}
                             {% else %}
-                            Nur-Lesen aktivieren
+                            {{ t('admin_enable_readonly') }}
                             {% endif %}
                         </button>
                     </form>
 
                     <a href="/admin/export/csv?token={{ token }}" class="btn btn-secondary">
-                        CSV-Export
+                        {{ t('admin_csv_export') }}
                     </a>
 
-                    <a href="/" class="btn btn-secondary">
-                        Zum Gästebuch
+                    <a href="/?lang={{ lang }}" class="btn btn-secondary">
+                        {{ t('admin_to_guestbook') }}
                     </a>
                 </div>
             </div>
         </section>
 
         <section class="admin-entries">
-            <h2>Einträge ({{ total_count }})</h2>
+            <h2>{{ t('entries') }} ({{ total_count }})</h2>
 
             {% if entries %}
             <table class="entries-table">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Rufzeichen</th>
-                        <th>Nachricht</th>
-                        <th>Datum</th>
-                        <th>Aktion</th>
+                        <th>{{ t('admin_id') }}</th>
+                        <th>{{ t('callsign') }}</th>
+                        <th>{{ t('message') }}</th>
+                        <th>{{ t('admin_date') }}</th>
+                        <th>{{ t('admin_action') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -75,8 +88,8 @@
                         <td>{{ entry.created_at.strftime('%d.%m.%Y %H:%M') }}</td>
                         <td>
                             <form action="/admin/delete/{{ entry.id }}?token={{ token }}" method="post" class="inline-form"
-                                  onsubmit="return confirm('Eintrag von {{ entry.callsign }} wirklich löschen?');">
-                                <button type="submit" class="btn btn-danger btn-small">Löschen</button>
+                                  onsubmit="return confirm('{{ t('admin_delete_confirm', entry.callsign) }}');">
+                                <button type="submit" class="btn btn-danger btn-small">{{ t('admin_delete') }}</button>
                             </form>
                         </td>
                     </tr>
@@ -84,7 +97,7 @@
                 </tbody>
             </table>
             {% else %}
-            <p class="no-entries">Keine Einträge vorhanden.</p>
+            <p class="no-entries">{{ t('admin_no_entries') }}</p>
             {% endif %}
         </section>
     </main>
@@ -92,7 +105,7 @@
     <footer>
         <p class="version">
             <a href="https://github.com/achildrenmile/gbham" target="_blank" rel="noopener noreferrer">gbHam</a>
-            v{{ settings.APP_VERSION }} - Admin
+            v{{ settings.APP_VERSION }} - {{ t('admin_title') }}
         </p>
     </footer>
 </body>
