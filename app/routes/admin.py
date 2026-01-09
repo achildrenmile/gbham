@@ -145,7 +145,7 @@ async def export_csv(
     writer = csv.writer(output, quoting=csv.QUOTE_ALL)
 
     # Header
-    writer.writerow(["ID", "Rufzeichen", "Nachricht", "Datum"])
+    writer.writerow(["ID", "Rufzeichen", "Nachricht", "Runde", "Datum"])
 
     # Data
     for entry in entries:
@@ -153,6 +153,7 @@ async def export_csv(
             entry.id,
             entry.callsign,
             entry.message,
+            entry.runde_datetime.isoformat() if entry.runde_datetime else "",
             entry.created_at.isoformat(),
         ])
 

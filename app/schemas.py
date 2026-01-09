@@ -3,7 +3,6 @@ gbHam Pydantic Schemas
 Request/Response validation schemas.
 """
 
-import re
 from datetime import datetime
 from typing import Optional
 
@@ -13,13 +12,6 @@ from app.config import get_settings
 
 settings = get_settings()
 
-# European amateur radio callsign pattern
-# Covers most European prefixes: DL, OE, HB, PA, ON, F, G, I, EA, CT, etc.
-# Format: 1-2 letters + digit + 1-4 letters (+ optional suffix like /P, /M, /QRP)
-CALLSIGN_PATTERN = re.compile(
-    r"^[A-Z]{1,2}[0-9][A-Z]{1,4}(?:/[A-Z0-9]{1,4})?$",
-    re.IGNORECASE
-)
 
 
 class GuestbookEntryCreate(BaseModel):
@@ -27,18 +19,18 @@ class GuestbookEntryCreate(BaseModel):
 
     callsign: str = Field(..., min_length=3, max_length=settings.MAX_CALLSIGN_LENGTH)
     message: str = Field(..., min_length=1, max_length=settings.MAX_MESSAGE_LENGTH)
+    runde_datetime: datetime = Field(..., description="Date and time of the runde")
     honeypot: Optional[str] = Field(default="", description="Honeypot field - must be empty")
 
     @field_validator("callsign")
     @classmethod
     def validate_callsign(cls, v: str) -> str:
-        """Validate and normalize callsign."""
-        # Normalize to uppercase and strip whitespace
-        normalized = v.strip().upper()
+        """Validate and normalize callsign/nickname."""
+        # Strip whitespace
+        normalized = v.strip()
 
-        # Check against pattern
-        if not CALLSIGN_PATTERN.match(normalized):
-            raise ValueError("Ungültiges Rufzeichen-Format")
+        if not normalized:
+            raise ValueError("Rufzeichen/Nickname darf nicht leer sein")
 
         return normalized
 
@@ -64,6 +56,7 @@ class GuestbookEntryResponse(BaseModel):
     id: int
     callsign: str
     message: str
+    runde_datetime: datetime
     created_at: datetime
 
     class Config:

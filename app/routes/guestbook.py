@@ -4,6 +4,7 @@ Entry creation and listing endpoints.
 """
 
 import logging
+from datetime import datetime
 from typing import List
 
 from fastapi import APIRouter, Depends, Request, Form, HTTPException, status
@@ -60,6 +61,7 @@ async def create_entry(
     request: Request,
     callsign: str = Form(...),
     message: str = Form(...),
+    runde_datetime: str = Form(...),
     website: str = Form(default=""),  # Honeypot field
     db: Session = Depends(get_db),
 ):
@@ -104,6 +106,15 @@ async def create_entry(
             status_code=status.HTTP_303_SEE_OTHER,
         )
 
+    # Parse runde_datetime
+    try:
+        runde_dt = datetime.fromisoformat(runde_datetime)
+    except ValueError:
+        return RedirectResponse(
+            url="/?error=validation",
+            status_code=status.HTTP_303_SEE_OTHER,
+        )
+
     # Sanitize inputs
     callsign_clean = sanitize_input(callsign)
     message_clean = sanitize_input(message)
@@ -113,6 +124,7 @@ async def create_entry(
         entry_data = GuestbookEntryCreate(
             callsign=callsign_clean,
             message=message_clean,
+            runde_datetime=runde_dt,
         )
     except ValueError as e:
         logger.debug(f"Validation error: {e}")
@@ -135,6 +147,7 @@ async def create_entry(
     db_entry = GuestbookEntry(
         callsign=entry_data.callsign,
         message=entry_data.message,
+        runde_datetime=entry_data.runde_datetime,
     )
     db.add(db_entry)
     db.commit()

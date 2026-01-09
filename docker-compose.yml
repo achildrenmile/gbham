@@ -40,7 +40,7 @@ services:
       # Database (internal path)
       - DATABASE_URL=sqlite:///./data/gbham.db
     volumes:
-      - gbham_data:/app/data
+      - ./data:/app/data
     networks:
       - gbham-network
     # Don't expose directly - use nginx
@@ -59,10 +59,6 @@ services:
       - app
     networks:
       - gbham-network
-
-volumes:
-  gbham_data:
-    name: gbham_data
 
 networks:
   gbham-network:

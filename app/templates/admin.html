@@ -75,6 +75,7 @@
                         <th>{{ t('admin_id') }}</th>
                         <th>{{ t('callsign') }}</th>
                         <th>{{ t('message') }}</th>
+                        <th>{{ t('runde') }}</th>
                         <th>{{ t('admin_date') }}</th>
                         <th>{{ t('admin_action') }}</th>
                     </tr>
@@ -85,6 +86,7 @@
                         <td>{{ entry.id }}</td>
                         <td class="callsign">{{ entry.callsign }}</td>
                         <td class="message-cell">{{ entry.message }}</td>
+                        <td>{{ entry.runde_datetime.strftime('%d.%m.%Y, %H:%M') }}</td>
                         <td>{{ entry.created_at.strftime('%d.%m.%Y %H:%M') }}</td>
                         <td>
                             <form action="/admin/delete/{{ entry.id }}?token={{ token }}" method="post" class="inline-form"

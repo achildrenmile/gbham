@@ -18,6 +18,7 @@ class GuestbookEntry(Base):
     id = Column(Integer, primary_key=True, index=True)
     callsign = Column(String(15), nullable=False, index=True)
     message = Column(String(300), nullable=False)
+    runde_datetime = Column(DateTime, nullable=False, index=True)
     created_at = Column(
         DateTime,
         default=lambda: datetime.now(timezone.utc),

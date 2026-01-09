@@ -311,6 +311,17 @@ section {
     color: #888;
 }
 
+.entry-runde {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.entry-runde .runde-label {
+    font-weight: 600;
+    color: #555;
+}
+
 .entry-message {
     color: #444;
     margin-bottom: 0;
