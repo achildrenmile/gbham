@@ -60,6 +60,20 @@ services:
     networks:
       - gbham-network
 
+  backup:
+    build:
+      context: .
+      dockerfile: Dockerfile.backup
+    container_name: gbham-backup
+    restart: unless-stopped
+    environment:
+      - RETENTION_DAYS=30
+    volumes:
+      - ./data:/app/data:ro
+      - /backup:/backup
+    networks:
+      - gbham-network
+
 networks:
   gbham-network:
     name: gbham-network

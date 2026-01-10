@@ -1,0 +1,16 @@
+FROM alpine:3.19
+
+RUN apk add --no-cache sqlite bash tzdata
+
+# Set timezone
+ENV TZ=Europe/Vienna
+
+COPY backup-db.sh /backup-db.sh
+RUN chmod +x /backup-db.sh
+
+# Setup cron job - daily at 3:30 AM
+RUN echo "30 3 * * * /backup-db.sh >> /var/log/backup.log 2>&1" > /etc/crontabs/root
+
+RUN touch /var/log/backup.log
+
+CMD ["crond", "-f", "-l", "2"]
