@@ -55,7 +55,7 @@ deploy_instance() {
     --name $NGINX_CONTAINER \
     --restart unless-stopped \
     --link $APP_CONTAINER:app \
-    -v $DIR/nginx.conf:/etc/nginx/conf.d/default.conf:ro \
+    -v $DIR/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro \
     -p $PORT:80 \
     nginx:1.25-alpine"
 
